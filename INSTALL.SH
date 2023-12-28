@@ -109,9 +109,14 @@ sudo sed -i "s/HOST_IP/$HOST_IP/g" /etc/apache2/sites-available/nextcloud.conf
 
 sudo ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/
 sudo a2enmod headers rewrite env dir mime
+sleep 2
+sudo systemctl enable apache2
+sleep 2
 sudo systemctl restart apache2 --no-page -l
-sudo service apache2 reload
-sudo service apache2 restart
+sleep 2
+sudo systemctl reload apache2
+sleep 2
+sudo systemctl restart apache2
 
 sleep 2
 
