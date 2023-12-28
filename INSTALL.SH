@@ -57,6 +57,32 @@ cat $DIR_APACHE | grep opcache.interned_strings_buffer= | head -n1
 
 sleep 2
 
+cp /etc/redis/redis.conf /etc/redis/redis.conf.bkp
+sudo sed -i "s|port 6379|port 0|g" /etc/redis/redis.conf
+sudo sed -i "s|# unixsocket /|unixsocket /|g" /etc/redis/redis.conf
+sudo sed -i "s|# unixsocketperm 700|unixsocketperm 770|g" /etc/redis/redis.conf
+sudo usermod -a -G redis www-data
+sudo service redis-server start
+sudo systemctl enable redis-server
+sudo service redis-server restart
+
+sudo apt install -y mariadb-server
+
+cat >> /opt/nextcloud_config.sql << EOL
+CREATE DATABASE $NC_DB;
+CREATE USER $NC_DB_USER@localhost IDENTIFIED BY '$NC_DB_USER_PASS';
+GRANT ALL PRIVILEGES ON $NC_DB.* TO $NC_DB_USER@localhost;
+FLUSH PRIVILEGES;
+EOL
+
+mysql -u root < /opt/nextcloud_config.sql
+
+wget -P /opt/ https://download.nextcloud.com/server/releases/latest.tar.bz2
+tar xvf /opt/latest.tar.bz2 -C /var/www/html/
+sudo mkdir -p /var/www/html/nextcloud/data
+sudo chown -R www-data:www-data /var/www/html/nextcloud/
+sudo chmod -R 755 /var/www/html/nextcloud/
+
 cat >> /etc/apache2/sites-available/nextcloud.conf << EOF
 <VirtualHost *:80>
     ServerAdmin admin@example.com
@@ -86,32 +112,6 @@ sudo a2enmod headers rewrite env dir mime
 sudo systemctl restart apache2 --no-page -l
 sudo service apache2 reload
 sudo service apache2 restart
-
-cp /etc/redis/redis.conf /etc/redis/redis.conf.bkp
-sudo sed -i "s|port 6379|port 0|g" /etc/redis/redis.conf
-sudo sed -i "s|# unixsocket /|unixsocket /|g" /etc/redis/redis.conf
-sudo sed -i "s|# unixsocketperm 700|unixsocketperm 770|g" /etc/redis/redis.conf
-sudo usermod -a -G redis www-data
-sudo service redis-server start
-sudo systemctl enable redis-server
-sudo service redis-server restart
-
-sudo apt install -y mariadb-server
-
-cat >> /opt/nextcloud_config.sql << EOL
-CREATE DATABASE $NC_DB;
-CREATE USER $NC_DB_USER@localhost IDENTIFIED BY '$NC_DB_USER_PASS';
-GRANT ALL PRIVILEGES ON $NC_DB.* TO $NC_DB_USER@localhost;
-FLUSH PRIVILEGES;
-EOL
-
-mysql -u root < /opt/nextcloud_config.sql
-
-wget -P /opt/ https://download.nextcloud.com/server/releases/latest.tar.bz2
-tar xvf /opt/latest.tar.bz2 -C /var/www/html/
-sudo mkdir -p /var/www/html/nextcloud/data
-sudo chown -R www-data:www-data /var/www/html/nextcloud/
-sudo chmod -R 755 /var/www/html/nextcloud/
 
 sleep 2
 
