@@ -35,23 +35,23 @@ sudo sed -i 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/g' $DIR_APAC
 sudo sed -i 's/opcache.memory_consumption=128/opcache.memory_consumption=1024/g' $DIR_APACHE
 sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=512/g' $DIR_APACHE
 echo
-cat $DIR_APACHE | grep date.timezone
-cat $DIR_APACHE | grep max_execution_time
-cat $DIR_APACHE | grep memory_limit
-cat $DIR_APACHE | grep post_max_size
-cat $DIR_APACHE | grep upload_max_filesize
-cat $DIR_APACHE | grep display_errors
-cat $DIR_APACHE | grep output_buffering
-cat $DIR_APACHE | grep file_uploads
-cat $DIR_APACHE | grep allow_url_fopen
-cat $DIR_APACHE | grep zend_extension
+cat $DIR_APACHE | grep date.timezone | head -n1
+cat $DIR_APACHE | grep max_execution_time | head -n1
+cat $DIR_APACHE | grep memory_limit | head -n1
+cat $DIR_APACHE | grep post_max_size | head -n1
+cat $DIR_APACHE | grep upload_max_filesize | head -n1
+cat $DIR_APACHE | grep display_errors | head -n1
+cat $DIR_APACHE | grep output_buffering | head -n1
+cat $DIR_APACHE | grep file_uploads | head -n1
+cat $DIR_APACHE | grep allow_url_fopen | head -n1
+cat $DIR_APACHE | grep zend_extension | head -n1
 echo
-cat $DIR_APACHE | grep opcache.enable=
-cat $DIR_APACHE | grep opcache.interned_strings_buffer=
-cat $DIR_APACHE | grep opcache.max_accelerated_files=
-cat $DIR_APACHE | grep opcache.memory_consumption=
-cat $DIR_APACHE | grep opcache.save_comments=
-cat $DIR_APACHE | grep opcache.revalidate_freq=
+cat $DIR_APACHE | grep opcache.enable= | head -n1
+cat $DIR_APACHE | grep opcache.interned_strings_buffer= | head -n1
+cat $DIR_APACHE | grep opcache.max_accelerated_files= | head -n1
+cat $DIR_APACHE | grep opcache.memory_consumption= | head -n1
+cat $DIR_APACHE | grep opcache.save_comments= | head -n1
+cat $DIR_APACHE | grep opcache.revalidate_freq= | head -n1
 
 sleep 2
 
