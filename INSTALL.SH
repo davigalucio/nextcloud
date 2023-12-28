@@ -32,6 +32,8 @@ sudo sed -i 's/;opcache.max_accelerated_files=10000/opcache.max_accelerated_file
 sudo sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=128/g' $DIR_APACHE
 sudo sed -i 's/;opcache.save_comments=1/opcache.save_comments=1/g' $DIR_APACHE
 sudo sed -i 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/g' $DIR_APACHE
+sudo sed -i 's/opcache.memory_consumption=128/opcache.memory_consumption=1024/g' $DIR_APACHE
+sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=512/g' $DIR_APACHE
 echo
 cat $DIR_APACHE | grep date.timezone
 cat $DIR_APACHE | grep max_execution_time
