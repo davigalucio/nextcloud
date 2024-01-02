@@ -37,7 +37,10 @@ sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer
 echo
 
 sudo sed -i 's|;clear_env|clear_env|g' /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+
 echo 'apc.enable_cli = 1' >> /etc/php/$PHP_VERSION/cli/php.ini
+echo 'apc.enable_cli=1' >> /etc/php/$PHP_VERSION/mods-available/apcu.ini
+echo 'apc.shm_size=512M' >> /etc/php/$PHP_VERSION/mods-available/apcu.ini
 
 cat $DIR_APACHE | grep "date.timezone =" | head -n1
 cat $DIR_APACHE | grep "max_execution_time =" | head -n1
