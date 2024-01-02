@@ -6,15 +6,9 @@ sudo sed -i 's|);||g' $DIR_NC_CONFIG
 
 cat >> $DIR_NC_CONFIG << EOL
   'default_phone_region' => 'BR',
-  'memcache.local' => '\OC\Memcache\APCu',
-  'filelocking.enabled' => true,
-  'memcache.locking' => '\OC\Memcache\Redis',
+  'memcache.local' => '\\OC\\Memcache\\Memcached',
   'memcache.distributed' => '\\OC\\Memcache\\Memcached',
-  'redis' => 
-     array (
-       'host' => 'localhost',
-       'port' => 0,
-       'timeout' => 0.0,
-     ),
+  'memcache.locking' => '\\OC\\Memcache\\Memcached',
+  'filelocking.enabled' => true,
   );
 EOL
