@@ -150,5 +150,5 @@ echo "Banco de dados: $NC_DB"
 echo "Usuário: $NC_DB_USER"
 echo "Senha: $NC_DB_USER_PASS"
 echo
-echo "Após concluir, execute o arquivo FIX.SH"
+echo "Após concluir, execute: sh nextcloud/FIX.SH"
 echo
