@@ -12,3 +12,5 @@ cat >> $DIR_NC_CONFIG << EOL
   'filelocking.enabled' => true,
   );
 EOL
+
+sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
