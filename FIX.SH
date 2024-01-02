@@ -19,5 +19,4 @@ sudo -u www-data php --define apc.enable_cli=1 /var/www/html/nextcloud/occ maint
 
 sudo -u www-data php /var/www/html/nextcloud/occ app:disable mail
 sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
-sudo -u www-data php /var/www/html/nextcloud/occ update
 sudo -u www-data php /var/www/html/nextcloud/occ maintenance:mode --off
