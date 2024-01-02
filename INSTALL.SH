@@ -127,7 +127,7 @@ sudo sed -i "s/HOST_IP/$HOST_IP/g" /etc/apache2/sites-available/nextcloud-ssl.co
 sudo a2enmod ssl
 sudo a2ensite nextcloud-ssl.conf
 sudo systemctl restart apache2
-apachectl configtest
+sudo apachectl configtest
 
 sudo a2enmod setenvif headers rewrite env dir mime
 sleep 2
