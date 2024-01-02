@@ -17,9 +17,9 @@ cp $DIR_APACHE $DIR_APACHE.bkp
 
 sudo sed -i 's/;date.timezone =/date.timezone = America\/Sao_Paulo/g' $DIR_APACHE
 sudo sed -i 's/max_execution_time = 30/max_execution_time = 3000/g' $DIR_APACHE
-sudo sed -i 's/memory_limit = 128M/memory_limit = 10G/g' $DIR_APACHE
-sudo sed -i 's/post_max_size = 8M/post_max_size = 10G/g' $DIR_APACHE
-sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100G/g' $DIR_APACHE
+sudo sed -i 's/memory_limit = 128M/memory_limit = 4096M/g' $DIR_APACHE
+sudo sed -i 's/post_max_size = 8M/post_max_size = 4096M/g' $DIR_APACHE
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1024000M/g' $DIR_APACHE
 sudo sed -i 's/display_errors = On/display_errors = Off/g' $DIR_APACHE
 sudo sed -i 's/output_buffering = 4096/output_buffering = Off/g' $DIR_APACHE
 sudo sed -i 's/file_uploads = Off/file_uploads = On/g' $DIR_APACHE
@@ -27,13 +27,13 @@ sudo sed -i 's/allow_url_fopen = Off/allow_url_fopen = On/g' $DIR_APACHE
 sudo sed -i 's/;zend_extension/zend_extension/g' $DIR_APACHE
 echo
 sudo sed -i 's/;opcache.enable=1/opcache.enable=1/g' $DIR_APACHE
-sudo sed -i 's/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=8/g' $DIR_APACHE
+sudo sed -i 's/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/g' $DIR_APACHE
 sudo sed -i 's/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=10000/g' $DIR_APACHE
-sudo sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=128/g' $DIR_APACHE
+sudo sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=512/g' $DIR_APACHE
 sudo sed -i 's/;opcache.save_comments=1/opcache.save_comments=1/g' $DIR_APACHE
 sudo sed -i 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/g' $DIR_APACHE
 sudo sed -i 's/opcache.memory_consumption=128/opcache.memory_consumption=1024/g' $DIR_APACHE
-sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=512/g' $DIR_APACHE
+sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=1024/g' $DIR_APACHE
 echo
 cat $DIR_APACHE | grep "date.timezone =" | head -n1
 cat $DIR_APACHE | grep "max_execution_time =" | head -n1
