@@ -125,8 +125,7 @@ sudo a2ensite nextcloud-ssl.conf
 sudo systemctl restart apache2
 apachectl configtest
 
-#sudo ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/
-sudo a2enmod headers rewrite env dir mime
+sudo a2enmod setenvif headers rewrite env dir mime
 sleep 2
 sudo systemctl enable apache2
 sleep 2
