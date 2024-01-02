@@ -6,7 +6,7 @@ sudo sed -i 's|);||g' $DIR_NC_CONFIG
 
 cat >> $DIR_NC_CONFIG << EOL
   'default_phone_region' => 'BR',
-  'memcache.local' => '\\OC\\Memcache\\Memcached',
+  'memcache.local' => '\\OC\\Memcache\\APCu',
   'memcache.distributed' => '\\OC\\Memcache\\Memcached',
   'memcache.locking' => '\\OC\\Memcache\\Memcached',
   'filelocking.enabled' => true,
