@@ -6,7 +6,7 @@ HOST_IP=$(hostname -I | head -n1 | cut -f1 -d' ')
 
 apt install -y sudo wget unzip bzip2  lbzip2
 sudo apt install -y apache2 openssl
-sudo apt install -y php redis-server libapache2-mod-php php-mysql php-common php-gd php php-fpm php-curl php-cli php-xml php-json php-intl php-pear php-imagick php-dev php-common php-mbstring php-zip php-soap php-bz2 php-bcmath php-gmp php-apcu libmagickcore-dev php-redis php-memcached
+sudo apt install -y php libapache2-mod-php php-mysql php-common php-gd php php-fpm php-curl php-cli php-xml php-json php-intl php-pear php-imagick php-dev php-common php-mbstring php-zip php-soap php-bz2 php-bcmath php-gmp php-apcu libmagickcore-dev php-redis php-memcached
 
 sleep 2
 
@@ -56,15 +56,6 @@ cat $DIR_APACHE | grep opcache.memory_consumption= | head -n1
 cat $DIR_APACHE | grep opcache.interned_strings_buffer= | head -n1
 
 sleep 2
-
-cp /etc/redis/redis.conf /etc/redis/redis.conf.bkp
-sudo sed -i "s|port 6379|port 0|g" /etc/redis/redis.conf
-sudo sed -i "s|# unixsocket /|unixsocket /|g" /etc/redis/redis.conf
-sudo sed -i "s|# unixsocketperm 700|unixsocketperm 770|g" /etc/redis/redis.conf
-sudo usermod -a -G redis www-data
-sudo service redis-server start
-sudo systemctl enable redis-server
-sudo service redis-server restart
 
 sudo apt install -y mariadb-server
 
