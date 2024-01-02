@@ -35,6 +35,9 @@ sudo sed -i 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=1/g' $DIR_APAC
 sudo sed -i 's/opcache.memory_consumption=128/opcache.memory_consumption=1024/g' $DIR_APACHE
 sudo sed -i 's/opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=1024/g' $DIR_APACHE
 echo
+
+sudo sed -i 's|;clear_env|clear_env|g' /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+
 cat $DIR_APACHE | grep "date.timezone =" | head -n1
 cat $DIR_APACHE | grep "max_execution_time =" | head -n1
 cat $DIR_APACHE | grep "memory_limit =" | head -n1
