@@ -6,7 +6,7 @@ sudo sed -i 's|);||g' $DIR_NC_CONFIG
 
 cat >> $DIR_NC_CONFIG << EOL
   'default_phone_region' => 'BR',
-  'memcache.local' => '\\OC\\Memcache\\APCu',
+  'memcache.local' => '\\OC\\Memcache\\Memcached',
   'memcache.distributed' => '\\OC\\Memcache\\Memcached',
   'memcache.locking' => '\\OC\\Memcache\\Memcached',
   'filelocking.enabled' => true,
@@ -14,3 +14,4 @@ cat >> $DIR_NC_CONFIG << EOL
 EOL
 
 sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
+sudo -u www-data php --define apc.enable_cli=1 /var/www/html/nextcloud/occ maintenance:repair
