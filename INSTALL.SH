@@ -5,7 +5,7 @@ NC_DB_USER_PASS=nextcloud_db_user_pass
 HOST_IP=$(hostname -I | head -n1 | cut -f1 -d' ')
 
 apt install -y sudo wget unzip bzip2  lbzip2
-sudo apt install -y apache2
+sudo apt install -y apache2 openssl
 sudo apt install -y php redis-server libapache2-mod-php php-mysql php-common php-gd php php-fpm php-curl php-cli php-xml php-json php-intl php-pear php-imagick php-dev php-common php-mbstring php-zip php-soap php-bz2 php-bcmath php-gmp php-apcu libmagickcore-dev php-redis php-memcached
 
 sleep 2
@@ -88,7 +88,28 @@ cat >> /etc/apache2/sites-available/nextcloud.conf << EOF
     ServerAdmin admin@example.com
     DocumentRoot /var/www/html/nextcloud/
     ServerName HOST_IP
+    Redirect permanent / https://HOST_IP/
+</VirtualHost>
+EOF
+mkdir /etc/ssl/certs/nextcloud
+openssl req -x509 -newkey rsa:4096 -keyout /etc/ssl/certs/nextcloud/key.pem -out /etc/ssl/certs/nextcloud/cert.pem -sha256 -days 3650 -nodes -subj "/C=BR/ST=Parana/L=Curitiba/O=nextcloud/OU=nextcloud/CN=localhost"
 
+cat >> /etc/apache2/sites-available/nextcloud-ssl.conf << EOF
+<VirtualHost *:443>
+    DirectoryIndex index.html index.php
+    ServerAdmin contact@mydomain.com
+    DocumentRoot /var/www/html/nextcloud
+    ServerName HOST_IP
+    ErrorLog /var/log/nextcloud.log
+    CustomLog /var/log/nextcloud-access.log combined
+    SSLEngine on
+    SSLProtocol all
+        SSLCertificateFile /etc/ssl/certs/nextcloud/cert.pem
+        SSLCertificateKeyFile /etc/ssl/certs/nextcloud/key.pem
+        #SSLCertificateChainFile /etc/ssl/certs/nextcloud/ca.pem
+    <IfModule mod_headers.c>
+      Header always set Strict-Transport-Security "max-age=15552000; includeSubDomains"
+    </IfModule>
     <Directory /var/www/html/nextcloud/>
         Options +FollowSymlinks
         AllowOverride All
@@ -99,15 +120,18 @@ cat >> /etc/apache2/sites-available/nextcloud.conf << EOF
         SetEnv HOME /var/www/html/nextcloud
         SetEnv HTTP_HOME /var/www/html/nextcloud
     </Directory>
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOF
 
 sudo sed -i "s/HOST_IP/$HOST_IP/g" /etc/apache2/sites-available/nextcloud.conf
+sudo sed -i "s/HOST_IP/$HOST_IP/g" /etc/apache2/sites-available/nextcloud-ssl.conf
 
-sudo ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/
+sudo a2enmod ssl
+sudo a2ensite nextcloud-ssl.conf
+sudo systemctl restart apache2
+apachectl configtest
+
+#sudo ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/
 sudo a2enmod headers rewrite env dir mime
 sleep 2
 sudo systemctl enable apache2
@@ -123,7 +147,7 @@ sleep 2
 echo
 echo "Instalação Concluída!"
 echo
-echo "Acesse via broswer http://$HOST_IP e configure:"
+echo "Acesse via broswer https://$HOST_IP e configure:"
 echo 
 echo "Banco de dados: $NC_DB"
 echo "Usuário: $NC_DB_USER"
