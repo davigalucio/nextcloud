@@ -9,11 +9,10 @@ cat >> $DIR_NC_CONFIG << EOL
   'memcache.local' => '\\OC\\Memcache\\APCu',
   'memcache.distributed' => '\\OC\\Memcache\\Memcached',
   'memcache.locking' => '\\OC\\Memcache\\Memcached',
-  'filelocking.enabled' => true,
-  'app_install_overwrite' => [],
+  'filelocking.enabled' => false,
   );
 EOL
 
-sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
+#sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
 sudo -u www-data php --define apc.enable_cli=1 /var/www/html/nextcloud/occ maintenance:repair
 
