@@ -15,4 +15,4 @@ EOL
 
 #sudo -u www-data php /var/www/html/nextcloud/occ maintenance:repair
 sudo -u www-data php --define apc.enable_cli=1 /var/www/html/nextcloud/occ maintenance:repair
-
+sudo -u www-data php /var/www/html/nextcloud/occ config:system:set maintenance_window_start --type=integer --value=1
