@@ -9,7 +9,7 @@ cat >> $DIR_NC_CONFIG << EOL
   'memcache.local' => '\\OC\\Memcache\\APCu',
   'memcache.distributed' => '\\OC\\Memcache\\Memcached',
   'memcache.locking' => '\\OC\\Memcache\\Memcached',
-  'filelocking.enabled' => true,
+  'filelocking.enabled' => false,
   );
 EOL
 
